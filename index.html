@@ -3,11 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bitácora de parcela</title>
+  <title>Bitácora de parcela de Najan</title>
 </head>
 <body>
   <header>
-    <h1>Bitácora de parcela</h1>
+    <div class="hero">
+      <div class="hero-icono" aria-hidden="true">🌿</div>
+      <div>
+        <h1>Bitácora de parcela <span class="nombre">de Najan</span></h1>
+        <p class="subtitulo">Registra y consulta las actividades de tus parcelas</p>
+      </div>
+    </div>
   </header>
 
   <main>
@@ -53,14 +59,22 @@
     </form>
 
     <section class="tarjeta tabla">
-      <table id="registros">
-        <thead>
-          <tr><th>Fecha</th><th>Parcela</th><th>Cultivo</th><th>Actividad</th><th>Observaciones</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div class="tabla-cabecera">
+        <h2>Registros</h2>
+        <p>Actividades guardadas</p>
+      </div>
+      <div class="tabla-scroll">
+        <table id="registros">
+          <thead>
+            <tr><th>Fecha</th><th>Parcela</th><th>Cultivo</th><th>Actividad</th><th>Observaciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </section>
   </main>
+
+  <footer>Bitácora de parcela · Curso DIMA 2026</footer>
 
   <script type="module" src="/src/main.js"></script>
 </body>

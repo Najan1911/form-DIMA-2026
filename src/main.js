@@ -20,7 +20,7 @@ function mostrar(registros) {
   if (registros.length === 0) {
     const celda = filas.insertRow().insertCell();
     celda.colSpan = 5;
-    celda.textContent = "Todavía no hay registros.";
+    celda.textContent = "🌱 Todavía no hay registros. ¡Guarda el primero!";
     return;
   }
   for (const r of registros) {
@@ -40,6 +40,7 @@ async function consultar() {
   if (error) {
     console.error(error);
     estado.textContent = "No se pudieron cargar los registros.";
+    estado.dataset.tipo = "error";
     return;
   }
   mostrar(data);
@@ -51,6 +52,8 @@ async function guardar(evento) {
   const { fecha, parcela, cultivo, actividad, observaciones } = Object.fromEntries(new FormData(formulario));
 
   boton.disabled = true;
+  estado.textContent = "";
+  delete estado.dataset.tipo;
   const { error } = await supabase
     .from("registros")
     .insert({ fecha, parcela, cultivo, actividad, observaciones });
@@ -59,9 +62,11 @@ async function guardar(evento) {
   if (error) {
     console.error(error);
     estado.textContent = "No se pudo guardar el registro.";
+    estado.dataset.tipo = "error";
     return;
   }
   estado.textContent = "Registro guardado.";
+  estado.dataset.tipo = "ok";
   formulario.observaciones.value = "";
   consultar();
 }
