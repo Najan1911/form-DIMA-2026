@@ -17,7 +17,7 @@ const TIPOS = {
 
 createServer(async (solicitud, respuesta) => {
   const ruta = normalize(decodeURIComponent(new URL(solicitud.url, "http://localhost").pathname));
-  const archivo = join(DIST, ruta === "/" ? "index.html" : ruta);
+  const archivo = join(DIST, ruta === "/" || ruta === "\\" ? "index.html" : ruta);
   try {
     const contenido = await readFile(archivo);
     respuesta.writeHead(200, { "Content-Type": TIPOS[extname(archivo)] ?? "application/octet-stream" });

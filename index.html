@@ -1,80 +1,130 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14966b">
+  <meta name="description" content="Bitácora de parcela: registra y consulta las actividades de tus parcelas.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
   <title>Bitácora de parcela de Najan</title>
 </head>
 <body>
-  <header>
-    <div class="hero">
-      <div class="hero-icono" aria-hidden="true">🌿</div>
-      <div>
-        <h1>Bitácora de parcela <span class="nombre">de Najan</span></h1>
-        <p class="subtitulo">Registra y consulta las actividades de tus parcelas</p>
+  <header class="hero">
+    <div class="hero-contenido">
+      <div class="hero-texto">
+        <span class="hero-icono" aria-hidden="true">🌿</span>
+        <div>
+          <h1>Bitácora de parcela <span class="nombre">de Najan</span></h1>
+          <p class="subtitulo">Registra y consulta las actividades de tus parcelas 🌱</p>
+        </div>
       </div>
+      <p class="pill-vivo" id="vivo" role="status">🔄 Cargando registros…</p>
     </div>
   </header>
 
   <main>
-    <form id="registro" class="tarjeta">
-      <div class="dos">
-        <div class="campo">
-          <label for="fecha">Fecha</label>
-          <input id="fecha" type="date" name="fecha" required>
+    <section class="resumen" aria-label="Resumen de la bitácora">
+      <article class="dato dato--verde">
+        <span class="dato-icono" aria-hidden="true">📋</span>
+        <div><strong id="total-registros">0</strong><span>registros</span></div>
+      </article>
+      <article class="dato dato--azul">
+        <span class="dato-icono" aria-hidden="true">🏞️</span>
+        <div><strong id="total-parcelas">0</strong><span>parcelas</span></div>
+      </article>
+      <article class="dato dato--ambar">
+        <span class="dato-icono" aria-hidden="true">🌾</span>
+        <div><strong id="total-cultivos">0</strong><span>cultivos</span></div>
+      </article>
+      <article class="dato dato--violeta">
+        <span class="dato-icono" aria-hidden="true">📅</span>
+        <div><strong id="ultima-fecha">—</strong><span>última actividad</span></div>
+      </article>
+    </section>
+
+    <div class="columnas">
+      <form id="registro" class="tarjeta">
+        <div class="panel-cabecera">
+          <div>
+            <h2>✍️ Nuevo registro</h2>
+            <p>Anota lo que hiciste hoy en el campo</p>
+          </div>
         </div>
+
+        <div class="dos">
+          <div class="campo">
+            <label for="fecha">📅 Fecha</label>
+            <input id="fecha" type="date" name="fecha" required>
+          </div>
+          <div class="campo">
+            <label for="cultivo">🌾 Cultivo</label>
+            <select id="cultivo" name="cultivo">
+              <option value="Maíz">🌽 Maíz</option>
+              <option value="Frijol">🫘 Frijol</option>
+              <option value="Haba">🫛 Haba</option>
+              <option value="Avena">🌾 Avena</option>
+            </select>
+          </div>
+        </div>
+
         <div class="campo">
-          <label for="cultivo">Cultivo</label>
-          <select id="cultivo" name="cultivo">
-            <option>Maíz</option>
-            <option>Frijol</option>
-            <option>Haba</option>
-            <option>Avena</option>
+          <label for="parcela">📍 Parcela</label>
+          <select id="parcela" name="parcela">
+            <option value="P-077 El Cerrito">🏞️ P-077 El Cerrito</option>
+            <option value="P-012 La Loma">⛰️ P-012 La Loma</option>
+            <option value="P-031 San Diego">🌳 P-031 San Diego</option>
           </select>
         </div>
-      </div>
-      <div class="campo">
-        <label for="parcela">Parcela</label>
-        <select id="parcela" name="parcela">
-          <option>P-077 El Cerrito</option>
-          <option>P-012 La Loma</option>
-          <option>P-031 San Diego</option>
-        </select>
-      </div>
-      <div class="campo">
-        <label for="actividad">Actividad</label>
-        <select id="actividad" name="actividad">
-          <option>Observación</option>
-          <option>Riego</option>
-          <option>Fertilización</option>
-          <option>Muestreo</option>
-        </select>
-      </div>
-      <div class="campo">
-        <label for="observaciones">Observaciones</label>
-        <textarea id="observaciones" name="observaciones" rows="8"></textarea>
-      </div>
-      <button type="submit">Guardar registro</button>
-      <p id="estado" class="estado" role="status"></p>
-    </form>
 
-    <section class="tarjeta tabla">
-      <div class="tabla-cabecera">
-        <h2>Registros</h2>
-        <p>Actividades guardadas</p>
-      </div>
-      <div class="tabla-scroll">
-        <table id="registros">
-          <thead>
-            <tr><th>Fecha</th><th>Parcela</th><th>Cultivo</th><th>Actividad</th><th>Observaciones</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
+        <fieldset class="campo campo--actividad">
+          <legend>🎯 Actividad</legend>
+          <div class="actividades">
+            <label class="actividad" data-color="violeta">
+              <input type="radio" name="actividad" value="Observación" aria-label="Observación" checked>
+              <span>👀 Observación</span>
+            </label>
+            <label class="actividad" data-color="azul">
+              <input type="radio" name="actividad" value="Riego" aria-label="Riego">
+              <span>💧 Riego</span>
+            </label>
+            <label class="actividad" data-color="verde">
+              <input type="radio" name="actividad" value="Fertilización" aria-label="Fertilización">
+              <span>🌱 Fertilización</span>
+            </label>
+            <label class="actividad" data-color="ambar">
+              <input type="radio" name="actividad" value="Muestreo" aria-label="Muestreo">
+              <span>🔬 Muestreo</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="campo">
+          <label for="observaciones">📝 Observaciones</label>
+          <textarea id="observaciones" name="observaciones" rows="5" placeholder="Ej. Aserrín en el cogollo, humedad normal…"></textarea>
+        </div>
+
+        <button type="submit" id="guardar">💾 Guardar registro</button>
+        <p id="estado" class="estado" role="status" aria-live="polite"></p>
+      </form>
+
+      <section class="tarjeta registros-tarjeta">
+        <div class="panel-cabecera">
+          <div>
+            <h2>📋 Registros <span class="contador" id="contador">0</span></h2>
+            <p id="resumen-registros">Actividades guardadas</p>
+          </div>
+          <button type="button" id="actualizar" class="boton-fantasma">🔄 Actualizar</button>
+        </div>
+
+        <div class="filtros" id="filtros" role="group" aria-label="Filtrar registros por actividad"></div>
+
+        <div class="lista" id="lista"></div>
+        <p class="vacio" id="vacio" hidden>🌵 Todavía no hay registros. ¡Guarda el primero!</p>
+      </section>
+    </div>
   </main>
 
-  <footer>Bitácora de parcela · Curso DIMA 2026</footer>
+  <footer>🌿 Bitácora de parcela · Curso DIMA 2026</footer>
 
   <script type="module" src="/src/main.js"></script>
 </body>
